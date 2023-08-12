@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  ssi:
+    build:
+      context: .
+      args:
+        - IMAGE=${IMAGE}
+        - GHC_VERSION=${GHC_VERSION}
+    image: ssi
+    container_name: ssi
+    network_mode: host
+    userns_mode: host
+    volumes:
+      - ${PREFIX:-/usr/local}:/tmp${PREFIX:-/usr/local}
+    environment:
+      - CABAL_VERSION_BUILD=${CABAL_VERSION}
+      - STACK_VERSION_BUILD=${STACK_VERSION}
+      - PREFIX=${PREFIX:-/usr/local}
+      - MODE=${MODE:-install}
