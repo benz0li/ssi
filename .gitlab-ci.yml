@@ -17,8 +17,8 @@
       export GHC_VERSION=$(sed -n "s|GHC_VERSION=\(.*\)|\1|p" sample..env)
     fi
   - |
-    if [[ -z "$CABAL_VERSION" ]]; then
-      export CABAL_VERSION_BUILD=$(sed -n "s|CABAL_VERSION=\(.*\)|\1|p" sample..env)
+    if [[ -z "$CABAL_VERSION_MIN" ]]; then
+      export CABAL_VERSION_MIN=$(sed -n "s|CABAL_VERSION_MIN=\(.*\)|\1|p" sample..env)
     fi
   - |
     if [[ -z "$STACK_VERSION" ]]; then
@@ -48,7 +48,7 @@ build:version-linux-amd64:
       docker build
       --build-arg IMAGE
       --build-arg GHC_VERSION
-      --build-arg CABAL_VERSION_BUILD
+      --build-arg CABAL_VERSION_MIN
       --build-arg STACK_VERSION_BUILD
       -t $CI_APP_REPO:$STACK_VERSION_BUILD-linux-amd64
       -f build.Dockerfile .
@@ -69,7 +69,7 @@ build:version-linux-arm64v8:
       docker build
       --build-arg IMAGE
       --build-arg GHC_VERSION
-      --build-arg CABAL_VERSION_BUILD
+      --build-arg CABAL_VERSION_MIN
       --build-arg STACK_VERSION_BUILD
       -t $CI_APP_REPO:$STACK_VERSION_BUILD-linux-arm64v8
       -f build.Dockerfile .

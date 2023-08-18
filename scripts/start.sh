@@ -18,11 +18,14 @@ if [[ ! -d "/tmp$PREFIX/bin" ]]; then
 fi
 
 if [[ "$MODE" == "install" ]]; then
-  # Install Cabal
   cabal update
-  cabal install "cabal-install-$CABAL_VERSION_BUILD"
-  echo "Copying 'cabal' to '$(which cabal)'"
-  cp -aL /root/.cabal/bin/cabal "$(which cabal)"
+
+  if dpkg --compare-versions "$(cabal --numeric-version)" lt "$CABAL_VERSION_MIN"; then
+    # Install Cabal
+    cabal install "cabal-install-$CABAL_VERSION_MIN"
+    echo "Copying 'cabal' to '$(which cabal)'"
+    cp -aL /root/.cabal/bin/cabal "$(which cabal)"
+  fi
 
   # Download and extract source code
   cd /tmp
@@ -30,6 +33,11 @@ if [[ "$MODE" == "install" ]]; then
     -o stack.tar.gz
   tar -xzf stack.tar.gz
   cd stack-*
+
+  # Apply patch
+  if [[ -f "/tmp/$STACK_VERSION_BUILD.patch" ]]; then
+    patch -p0 <"/tmp/$STACK_VERSION_BUILD.patch"
+  fi
 
   # Modify config
   sed -i /stack/d cabal.config

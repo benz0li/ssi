@@ -14,7 +14,7 @@ services:
     volumes:
       - ${PREFIX:-/usr/local}:/tmp${PREFIX:-/usr/local}
     environment:
-      - CABAL_VERSION_BUILD=${CABAL_VERSION}
+      - CABAL_VERSION_MIN=${CABAL_VERSION_MIN}
       - STACK_VERSION_BUILD=${STACK_VERSION}
       - PREFIX=${PREFIX:-/usr/local}
       - MODE=${MODE:-install}

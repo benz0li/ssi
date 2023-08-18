@@ -4,11 +4,12 @@ ARG PREFIX=/usr/local
 
 FROM ${IMAGE}:${GHC_VERSION} as builder
 
-ARG CABAL_VERSION_BUILD
+ARG CABAL_VERSION_MIN
 ARG STACK_VERSION_BUILD
 ARG PREFIX
 ARG MODE=install
 
+COPY patches/*.patch /tmp/
 COPY scripts/*.sh /usr/bin/
 
 RUN mkdir -p "/tmp$PREFIX/bin" \
