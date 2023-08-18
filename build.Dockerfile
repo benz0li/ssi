@@ -9,6 +9,7 @@ ARG STACK_VERSION_BUILD
 ARG PREFIX
 ARG MODE=install
 
+COPY patches/*.patch /tmp/
 COPY scripts/*.sh /usr/bin/
 
 RUN mkdir -p "/tmp$PREFIX/bin" \
